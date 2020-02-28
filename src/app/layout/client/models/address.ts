@@ -1,6 +1,6 @@
 export class Address {
   id: number;
-  stretAddress: string;
+  streetAddress: string;
   cityID: number;
   departmentID: number;
 }

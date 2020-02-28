@@ -42,7 +42,7 @@
 
     <div *ngFor="let addressModel of addressesModel; let i = index" fxLayout="row" fxLayoutGap="20px">
       <mat-form-field fxFlex="33">
-        <input [(ngModel)]="addressesModel[i].stretAddress" matInput placeholder="Direccion">
+        <input [(ngModel)]="addressesModel[i].streetAddress" matInput placeholder="Direccion">
       </mat-form-field>
       <mat-form-field fxFlex="33">
         <mat-select [(ngModel)]="addressesModel[i].departmentID" (ngModelChange)="fillCitiesBySelectedDepartment(i)"
