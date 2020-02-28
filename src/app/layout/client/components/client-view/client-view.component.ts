@@ -12,7 +12,7 @@ import { Address } from '../../models/address';
 })
 export class ClientViewComponent implements OnInit {
 
-  displayedColumns = ['stretAddress', 'city', 'options'];
+  displayedColumns = ['streetAddress', 'city', 'options'];
 
   selectedClientdID: number;
   clientModel: Client = new Client();
