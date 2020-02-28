@@ -1,0 +1,82 @@
+<mat-card class="wrapper-mat-card" fxLayout="column">
+
+  <div class="wrapper-mat-card-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-card-title class="mat-card-title">
+      Clientes
+    </mat-card-title>
+    <div>
+      <button (click)="onCreate()" mat-raised-button color="accent">
+        <mat-icon>add</mat-icon>
+        <span>Nuevo Cliente</span>
+      </button>
+    </div>
+  </div>
+
+  <mat-card-content fxLayout="column">
+    <mat-toolbar-row>
+      <mat-form-field class="search-row" floatPlaceholder="never" fxFlex="70">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <span class="fill-spacer"></span>
+    </mat-toolbar-row>
+
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource" class="wrapper-mat-table" matSort matSortActive="created" matSortDisableClear
+      matSortDirection="asc">
+      <!-- identification Column -->
+      <ng-container matColumnDef="identification">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Identificación
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <a class="table-routerLink" [routerLink]="['/client-view', row.id]">
+            {{row.identification}}
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <!-- firstName Column -->
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Nombres
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.firstName }}</mat-cell>
+      </ng-container>
+
+      <!-- lastName Column -->
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Apellidos
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.lastName }}</mat-cell>
+      </ng-container>
+
+      <!-- telephone1 Column -->
+      <ng-container matColumnDef="telephone1">
+        <mat-header-cell *matHeaderCellDef>Telefono</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.telephone1 }}</mat-cell>
+      </ng-container>
+
+      <!-- Options Column -->
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef>Options</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="onEdit(row.id)">Edit</button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[25, 50, 100]"></mat-paginator>
+  </mat-card-content>
+</mat-card>

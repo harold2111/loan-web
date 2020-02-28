@@ -1,0 +1,72 @@
+<mat-card class="wrapper-mat-card" fxLayout="column">
+
+  <div class="wrapper-mat-card-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-card-title *ngIf="!isEditMode" class="mat-card-title">
+      Crear Cliente
+    </mat-card-title>
+    <mat-card-title *ngIf="isEditMode" class="mat-card-title">
+      Editar Cliente
+    </mat-card-title>
+  </div>
+
+  <mat-card-content fxLayout="column">
+    <div *ngIf="isEditMode" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field>
+        <input matInput placeholder="ID" disabled value="{{selecteClientdId}}">
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex="33">
+        <input matInput [(ngModel)]="clientModel.identification" placeholder="Identificación">
+      </mat-form-field>
+      <mat-form-field fxFlex="33">
+        <input [(ngModel)]="clientModel.firstName" matInput placeholder="Nombres">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input [(ngModel)]="clientModel.lastName" matInput placeholder="Apellidos">
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex="33">
+        <input [(ngModel)]="clientModel.telephone1" matInput placeholder="Telefono 1">
+      </mat-form-field>
+      <mat-form-field fxFlex="33">
+        <input [(ngModel)]="clientModel.telephone2" matInput placeholder="Telefono 2">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input [(ngModel)]="clientModel.email" matInput placeholder="Email">
+      </mat-form-field>
+    </div>
+
+    <div *ngFor="let addressModel of addressesModel; let i = index" fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex="33">
+        <input [(ngModel)]="addressesModel[i].stretAddress" matInput placeholder="Direccion">
+      </mat-form-field>
+      <mat-form-field fxFlex="33">
+        <mat-select [(ngModel)]="addressesModel[i].departmentID" (ngModelChange)="fillCitiesBySelectedDepartment(i)"
+          placeholder="Departamento">
+          <mat-option *ngFor="let d of departments" [value]="d.id">{{d.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-select [(ngModel)]="addressesModel[i].cityID" [disabled]="!addressesModel[i].departmentID"
+          placeholder="Ciudad">
+          <mat-option *ngFor="let c of citiesByDeparmentSelected[i]" [value]="c.id">{{c.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="i > 0">
+        <button (click)="onRemoveddress(i)" mat-raised-button color="accent">Remover</button>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center">
+      <button (click)="onAddAddress()" mat-raised-button color="accent">Agregar dirección</button>
+    </div>
+
+    <mat-card-actions fxLayout="row-reverse">
+      <button (click)="onSave()" mat-raised-button color="accent">Guardar</button>
+      <button (click)="onCancel()" mat-raised-button color="accent">Cancelar</button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

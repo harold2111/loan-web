@@ -1,0 +1,8 @@
+
+@mixin angular-toolbar-theme($theme) {  
+  .mat-toolbar {
+    background: inherit;
+  }    
+}
+
+@include angular-toolbar-theme($default-theme);

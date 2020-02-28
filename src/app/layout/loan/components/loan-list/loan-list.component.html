@@ -1,0 +1,115 @@
+<mat-card class="wrapper-mat-card" fxLayout="column">
+
+  <div class="wrapper-mat-card-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-card-title class="mat-card-title">
+      Creditos
+    </mat-card-title>
+    <div>
+      <button (click)="onCreate()" mat-raised-button color="accent">
+        <mat-icon>add</mat-icon>
+        <span>Crear Credito</span>
+      </button>
+    </div>
+  </div>
+
+  <mat-card-content fxLayout="column">
+    <mat-toolbar-row>
+      <mat-form-field class="search-row" floatPlaceholder="never" fxFlex="70">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <span class="fill-spacer"></span>
+      <button mat-icon-button>
+        <mat-icon>autorenew</mat-icon>
+      </button>
+    </mat-toolbar-row>
+
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <mat-table #table [dataSource]="data" class="wrapper-mat-table" matSort matSortActive="created" matSortDisableClear
+      matSortDirection="asc">
+      
+      <!-- id Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          ID
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <a class="table-routerLink" [routerLink]="['/loan-view', row.id]">
+            {{row.id}}
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <!-- principal Column -->
+      <ng-container matColumnDef="principal">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Principal
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{ row.principal }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- interestRatePeriod Column -->
+      <ng-container matColumnDef="interestRatePeriod">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Interest
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{ row.interestRatePeriod }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- periodNumbers Column -->
+      <ng-container matColumnDef="periodNumbers">
+        <mat-header-cell *matHeaderCellDef>
+          Numero de cuotas
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{ row.periodNumbers }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- paymentAgreed Column -->
+      <ng-container matColumnDef="paymentAgreed">
+        <mat-header-cell *matHeaderCellDef>
+          Cuota
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{ row.paymentAgreed }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- status Column -->
+      <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef>
+            Estado
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.status }}
+          </mat-cell>
+        </ng-container>
+
+      <!-- Options Column -->
+      <ng-container matColumnDef="options">
+        <mat-header-cell *matHeaderCellDef>Options</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="onEdit(row.id)">Edit</button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator [length]="resultsLength" [pageIndex]="0" [pageSize]="25" [pageSizeOptions]="[25, 50, 100]">
+    </mat-paginator>
+  </mat-card-content>
+</mat-card>

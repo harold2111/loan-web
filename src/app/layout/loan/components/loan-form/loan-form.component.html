@@ -1,0 +1,129 @@
+<mat-card class="wrapper-mat-card" fxLayout="column">
+
+  <div class="wrapper-mat-card-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-card-title class="mat-card-title">
+      Crear Credito
+    </mat-card-title>
+  </div>
+
+  <mat-card-content fxLayout="column">
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex="33">
+        <mat-select [(ngModel)]="selectedClientId" placeholder="Cliente">
+          <mat-option *ngFor="let c of clientsModel" [value]="c.id">{{c.firstName + " " + c.lastName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="33">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="loanModel.startDate" placeholder="Fecha inicio" disabled>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex="33">
+        <input matInput type="text" placeholder="Principal" [ngModel]="loanModel.principal | currency:'USD':'symbol':'1.2'" 
+                                                            [ngModelOptions]="{updateOn:'blur'}" 
+                                                            (ngModelChange)="loanModel.principal=$event"/>
+      </mat-form-field>
+      <mat-form-field fxFlex="33">
+        <input type="text" [(ngModel)]="interestRatePeriod" matInput placeholder="Interes Periodo" required>
+        <span matSuffix>%&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput type="number" [(ngModel)]="loanModel.periodNumbers"  placeholder="No. Periodos" required>
+      </mat-form-field>
+    </div>
+
+    <mat-card-actions fxLayout="row-reverse">
+      <button (click)="onCreate()" mat-raised-button color="accent" [disabled]="!wasSimulationExecuted || !selectedClientId">Crear</button>
+      <button (click)="onSimulate()" mat-raised-button color="accent">Simular</button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="wrapper-mat-card" fxLayout="column">
+
+  <div class="wrapper-mat-card-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-card-title class="mat-card-title">
+      Tabla de amortización
+    </mat-card-title>
+  </div>
+
+  <mat-card-content fxLayout="column">
+
+    <mat-table #addressesTable [dataSource]="amortizationsModel" class="wrapper-mat-table" matSort matSortActive="created"
+      matSortDisableClear matSortDirection="asc">
+
+      <!-- period Column -->
+      <ng-container matColumnDef="period">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Cuota #
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.period}}</mat-cell>
+      </ng-container>
+
+      <!-- paymentDate Column -->
+      <ng-container matColumnDef="paymentDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Fecha Pago
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.paymentDate | date: "dd/MM/yyyy"}}</mat-cell>
+      </ng-container>
+
+      <!-- initialPrincipal Column -->
+      <ng-container matColumnDef="initialPrincipal">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Saldo Inicial
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.initialPrincipal | currency:'USD':'symbol':'1.2'}}</mat-cell>
+      </ng-container>
+
+      <!-- payment Column -->
+      <ng-container matColumnDef="payment">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Pago
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.payment | currency:'USD':'symbol':'1.2'}}</mat-cell>
+      </ng-container>
+
+      <!-- interestRatePeriod Column -->
+      <ng-container matColumnDef="interestRatePeriod">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Interes
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.interestRatePeriod }}</mat-cell>
+      </ng-container>
+
+      <!-- toInterest Column -->
+      <ng-container matColumnDef="toInterest">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Pago a Interes
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.toInterest | currency:'USD':'symbol':'1.2'}}</mat-cell>
+      </ng-container>
+
+      <!-- toPrincipal Column -->
+      <ng-container matColumnDef="toPrincipal">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Pago a Capital
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.toPrincipal | currency:'USD':'symbol':'1.2'}}</mat-cell>
+      </ng-container>
+
+      <!-- finalPrincipal Column -->
+      <ng-container matColumnDef="finalPrincipal">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
+          Saldo Final
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.finalPrincipal | currency:'USD':'symbol':'1.2'}}</mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+  </mat-card-content>
+</mat-card>
