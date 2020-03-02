@@ -1,11 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Material auto-import - INI*/
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-/* Material auto-import - FIN*/
-
-.basic-container {
-  padding: 5px;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-@import 'assets/scss/simple-theme.scss';
+
+@import "assets/scss/simple-theme.scss";

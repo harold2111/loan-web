@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { merge, of as observableOf} from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { LoanService } from '../../services/loan.service';
@@ -14,9 +14,11 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./loan-list.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoanListComponent implements OnInit {
-  displayedColumns = ['id', 'principal', 'interestRatePeriod', 'periodNumbers',
-                      'paymentAgreed', 'status', 'options'];
+export class LoanListComponent implements AfterViewInit {
+
+  title = 'Creditos';
+
+  displayedColumns = ['id', 'principal', 'interestRatePeriod', 'periodNumbers', 'paymentAgreed', 'status', 'options'];
   data: Loan[] = [];
 
   resultsLength = 0;
@@ -31,11 +33,9 @@ export class LoanListComponent implements OnInit {
     private loanService: LoanService
   ) { }
 
-  ngOnInit() {
-
+  ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),

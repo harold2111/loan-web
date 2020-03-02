@@ -1,44 +1,48 @@
+.main-container {
+  margin: auto;
+  height: 100vh;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows:
+    auto
+    1fr;
+  grid-template-areas:
+    "h h"
+    "s c";
 
-.wrapper-container {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
+  .header {
+    grid-area: h;
+  }
 
-.wrapper-sidenav-container {
-  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-  flex: 1;
-  height: calc( 100vh - 65px );
-}
+  .side-nav {
+    padding-top: 15px;
+    grid-area: s;
+    background-color: #262f3d;
+    nav {
+      display: block;
+      min-width: 15em;
+      a {
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #fff;
+        display: block;
+        :hover .router-link-active {
+          background: #000;
+          border-left: 5px solid #1e88e5;
+          box-sizing: border-box;
+        }
+      }
+      .router-link-active {
+        background: #000;
+        border-left: 5px solid #1e88e5;
+        box-sizing: border-box;
+      }
+    }
+  }
 
-.wrapper-sidenav {
-  width: 260px;
-  background-color: #262f3d;
-}
-
-.mat-nav-list {
-  padding-top: 15px;
-}
-
-.mat-nav-list-item {
-  margin: 10px 15px;
-  color:white !important;
-}
-
-.active-link { border-right: 5px solid #1e88e5; }
-
-.wrapper-mat-card{
-  margin:15px;
-}
-
-.wrapper-mat-card-header {  
-   margin-bottom: 16px;
-  .mat-card-title{
-    margin-bottom: 0;
+  .content-container {
+    height: 100%;
+    grid-area: c;
   }
 }

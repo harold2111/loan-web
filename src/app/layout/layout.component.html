@@ -1,30 +1,28 @@
-<div class="wrapper-container">
-  <mat-toolbar color="primary" class="wrapper-toolbar">
-    <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>apps</mat-icon>
-    </button>
-    <div routerLink="/" class="pl-15">HyE Loans</div>
-    <span class="spacer"></span>
-  </mat-toolbar>
-  <mat-sidenav-container class="wrapper-sidenav-container">
-    <mat-sidenav #snav class="wrapper-sidenav" mode="side" opened="true">
-      <mat-nav-list>
-        <a mat-list-item class="mat-nav-list-item" routerLink="/dashboard" [routerLinkActive]="['router-link-active']">
-          <mat-icon matListIcon class="icon-white">dashboard</mat-icon>
-          <span matLine>Dashboard</span>
-        </a>
-        <a mat-list-item class="mat-nav-list-item" [routerLink]="['/client']" [routerLinkActive]="['router-link-active']">
-          <mat-icon matListIcon class="icon-white">people</mat-icon>
-          <span matLine>Clientes</span>
-        </a>
-        <a mat-list-item class="mat-nav-list-item" [routerLink]="['/loan']" [routerLinkActive]="['router-link-active']">
-          <mat-icon matListIcon class="icon-white">account_balance</mat-icon>
-          <span matLine>Creditos</span>
-        </a>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content class="sidenav-outlet">
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<div class="main-container">
+  <header class="header">
+    <mat-toolbar color="primary">
+      <button mat-icon-button>
+        <mat-icon>apps</mat-icon>
+      </button>
+      <div routerLink="/" class="pl-15">HyE Loans</div>
+      <span class="spacer"></span>
+    </mat-toolbar>
+  </header>
+
+  <aside class="side-nav">
+    <nav>
+      <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']">
+        <i class="fa fa-fw fa-home"></i> Dashboard
+      </a>
+      <a routerLink="/client" [routerLinkActive]="['router-link-active']">
+        <i class="fa fa-fw fa-home"></i> Clientes
+      </a>
+      <a routerLink="/loan" [routerLinkActive]="['router-link-active']">
+        <i class="fa fa-fw fa-home"></i> Creditos
+      </a>
+    </nav>
+  </aside>
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
 </div>
