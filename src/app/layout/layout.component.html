@@ -1,15 +1,37 @@
 <div class="main-container">
-  <header class="header">
-    <mat-toolbar color="primary">
+  <header class="main-header">
+    <mat-toolbar>
       <button mat-icon-button>
         <mat-icon>apps</mat-icon>
       </button>
-      <div routerLink="/" class="pl-15">HyE Loans</div>
+      <div routerLink="/">HyE Loans</div>
       <span class="spacer"></span>
     </mat-toolbar>
   </header>
 
-  <aside class="side-nav">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened class="main-sidenav">
+      <mat-nav-list>
+        <a mat-list-item href="/dashboard" [routerLinkActive]="['router-link-active']"> 
+          <mat-icon matListIcon class="nav-icon">home</mat-icon>
+          <div mat-line>Home</div>
+        </a>
+        <a mat-list-item href="/client"  [routerLinkActive]="['router-link-active']" > 
+          <mat-icon matListIcon>people</mat-icon>
+          <div mat-line>Clientes</div>
+        </a>
+        <a mat-list-item href="/loan" [routerLinkActive]="['router-link-active']"> 
+          <mat-icon matListIcon>monetization_on</mat-icon>
+          <div mat-line>Creditos</div>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="main-content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <!--aside class="side-nav">
     <nav>
       <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']">
         <i class="fa fa-fw fa-home"></i> Dashboard
@@ -24,5 +46,5 @@
   </aside>
   <div class="content-container">
     <router-outlet></router-outlet>
-  </div>
+  </div-->
 </div>

@@ -1,21 +1,34 @@
+
+$sidenav_width: 200px;
+
+//main container Layout
 .main-container {
   margin: auto;
   height: 100vh;
   max-width: 1200px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: $sidenav_width 1fr;
   grid-template-rows:
     auto
     1fr;
   grid-template-areas:
     "h h"
-    "s c";
+    "c c";
 
-  .header {
+  .main-header {
     grid-area: h;
   }
 
-  .side-nav {
+  .sidenav-container {
+    grid-area: c;
+
+    .main-sidenav {
+      width: $sidenav_width;
+    }
+  }
+}
+
+/*.side-nav {
     padding-top: 15px;
     grid-area: s;
     background-color: #262f3d;
@@ -44,5 +57,4 @@
   .content-container {
     height: 100%;
     grid-area: c;
-  }
-}
+  }*/
