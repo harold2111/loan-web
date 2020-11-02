@@ -34,7 +34,7 @@ export class LoanFormComponent implements OnInit {
     private clientService: ClientService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.clientService.getClients().subscribe(
       (clients: Client[]) => {
         this.clientsModel = clients;
@@ -43,7 +43,7 @@ export class LoanFormComponent implements OnInit {
   }
 
 
-  onSimulate() {
+  onSimulate(): void {
     this.loanModel.interestRatePeriod = this.interestRatePeriod / 100;
     this.loanModel.clientID = this.selectedClientId;
     this.loanService.simulateLoan(this.loanModel).subscribe(
@@ -58,7 +58,7 @@ export class LoanFormComponent implements OnInit {
     );
   }
 
-  onCreate() {
+  onCreate(): void {
     this.loanModel.interestRatePeriod = this.interestRatePeriod / 100;
     this.loanModel.clientID = this.selectedClientId;
   }

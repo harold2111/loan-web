@@ -25,14 +25,14 @@ export class ClientViewComponent implements OnInit {
     private locationService: LocationService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getSelectedClientIDParameter();
     this.clientService.getClientById(this.selectedClientdID).subscribe((client) => {
       this.clientModel = client;
     });
   }
 
-  getSelectedClientIDParameter() {
+  getSelectedClientIDParameter(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       if (id != null) {
@@ -45,7 +45,7 @@ export class ClientViewComponent implements OnInit {
     this.router.navigate(['/client-address-form', { id: this.selectedClientdID, addressID: addressID }]);
   }
 
-  onCreateAddress() {
+  onCreateAddress(): void {
     this.router.navigate(['/client-address-form', { id: this.selectedClientdID }]);
   }
 

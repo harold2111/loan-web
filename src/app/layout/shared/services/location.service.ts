@@ -57,7 +57,7 @@ export class LocationService {
   }
 
   /** Log a ClientService message with the MessageService */
-  private log(message: string) {
+  private log(message: string): void {
     this.messageService.add('ClientService: ' + message);
   }
 }

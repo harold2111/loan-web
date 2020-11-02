@@ -41,7 +41,7 @@ export class LoanService {
       );
   }
 
-    /**
+/**
  * Handle Http operation that failed.
  * Let the app continue.
  * @param operation - name of the operation that failed
@@ -65,7 +65,7 @@ private handleError<T>(operation = 'operation', result?: T) {
 }
 
 /** Log a ClientService message with the MessageService */
-private log(message: string) {
+private log(message: string): void {
   // this.messageService.add('ClientService: ' + message);
   console.log('LoanService: ' + message);
 }

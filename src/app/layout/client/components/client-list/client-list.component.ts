@@ -31,7 +31,7 @@ export class ClientListComponent implements OnInit {
     private router: Router,
     private clientService: ClientService) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
       this.isLoadingResults = true;
       this.clientService.getClients().subscribe(
         Clients => {
@@ -46,7 +46,7 @@ export class ClientListComponent implements OnInit {
       );
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

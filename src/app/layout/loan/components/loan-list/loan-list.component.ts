@@ -33,7 +33,7 @@ export class LoanListComponent implements AfterViewInit {
     private loanService: LoanService
   ) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
@@ -61,10 +61,10 @@ export class LoanListComponent implements AfterViewInit {
   }
 
   onEdit(id: number): void {
-    this.router.navigate(['/loan/loand/loan-form', id]);
+    this.router.navigate(['/loan/loan/loan-form', id]);
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     // TODO: implement
   }
 

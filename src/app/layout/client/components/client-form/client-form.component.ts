@@ -33,7 +33,7 @@ export class ClientFormComponent implements OnInit {
     private locationService: LocationService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getSelectedIDParameter();
     this.loadDepartments();
     if (this.isEditMode) {
@@ -51,13 +51,13 @@ export class ClientFormComponent implements OnInit {
     }
   }
 
-  loadDepartments() {
+  loadDepartments(): void {
     this.locationService.getDepartments().subscribe(departments => {
       this.departments = departments;
     });
   }
 
-  getSelectedIDParameter() {
+  getSelectedIDParameter(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       if (id != null) {
@@ -67,31 +67,31 @@ export class ClientFormComponent implements OnInit {
     });
   }
 
-  loadCitiesBySelectedDepartment(index: number) {
+  loadCitiesBySelectedDepartment(index: number): void {
     const departmentID = this.addressesModel[index].departmentID;
     this.locationService.getCitiesByDepartmentID(departmentID).subscribe(cities => {
       this.citiesByDeparmentSelected[index] = cities;
     });
   }
 
-  fillCitiesBySelectedDepartment(index: number) {
+  fillCitiesBySelectedDepartment(index: number): void {
     this.addressesModel[index].cityID = 0;
     this.loadCitiesBySelectedDepartment(index);
   }
 
-  onAddAddress() {
+  onAddAddress(): void {
     this.addressesModel.push(new Address());
   }
 
-  onRemoveddress(index: number) {
+  onRemoveddress(index: number): void {
     this.addressesModel.splice(index, 1);
   }
 
-  onCancel() {
+  onCancel(): void {
     this.location.back();
   }
 
-  onSave() {
+  onSave(): void {
     if (this.isEditMode) {
       this.clientService.editClient(this.selecteClientdId, this.clientModel).subscribe(client => {
         this.location.back();
