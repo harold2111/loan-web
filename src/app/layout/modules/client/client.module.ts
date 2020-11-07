@@ -5,7 +5,7 @@ import { ClientFormComponent } from './components/client-form/client-form.compon
 import { ClientViewComponent } from './components/client-view/client-view.component';
 
 import { ClientRoutingModule } from './client-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({

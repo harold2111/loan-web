@@ -8,9 +8,9 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'dashboard' },
-      { path: 'dashboard', loadChildren: () => import('./blank-page/blank-page.module').then(m => m.BlankPageModule) },
-      { path: 'client', loadChildren: () => import('./client/client.module').then(m => m.ClientModule) },
-      { path: 'loan', loadChildren: () => import('./loan/loan.module').then(m => m.LoanModule) }
+      { path: 'dashboard', loadChildren: () => import('./modules/blank-page/blank-page.module').then(m => m.BlankPageModule) },
+      { path: 'client', loadChildren: () => import('./modules/client/client.module').then(m => m.ClientModule) },
+      { path: 'loan', loadChildren: () => import('./modules/loan/loan.module').then(m => m.LoanModule) }
     ]
   }
 ];

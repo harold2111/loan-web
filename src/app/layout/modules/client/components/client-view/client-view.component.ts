@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../../models/Client';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ClientService } from '../../services/client.service';
-import { LocationService } from '../../../shared/services/location.service';
+import { LocationService } from '../../../../shared/services/location.service';
 import { Address } from '../../models/address';
 
 @Component({

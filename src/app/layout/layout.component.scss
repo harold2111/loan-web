@@ -1,60 +1,13 @@
 
-$sidenav_width: 200px;
-
-//main container Layout
 .main-container {
-  margin: auto;
   height: 100vh;
-  max-width: 1200px;
-  display: grid;
-  grid-template-columns: $sidenav_width 1fr;
-  grid-template-rows:
-    auto
-    1fr;
-  grid-template-areas:
-    "h h"
-    "c c";
-
-  .main-header {
-    grid-area: h;
-  }
 
   .sidenav-container {
-    grid-area: c;
-
-    .main-sidenav {
-      width: $sidenav_width;
-    }
-  }
-}
-
-/*.side-nav {
-    padding-top: 15px;
-    grid-area: s;
-    background-color: #262f3d;
-    nav {
-      display: block;
-      min-width: 15em;
-      a {
-        padding: 10px 15px;
-        text-decoration: none;
-        color: #fff;
-        display: block;
-        :hover .router-link-active {
-          background: #000;
-          border-left: 5px solid #1e88e5;
-          box-sizing: border-box;
-        }
-      }
-      .router-link-active {
-        background: #000;
-        border-left: 5px solid #1e88e5;
-        box-sizing: border-box;
-      }
-    }
+    width: 350px;
   }
 
   .content-container {
-    height: 100%;
-    grid-area: c;
-  }*/
+    padding: 20px;
+  }
+
+}

@@ -4,9 +4,9 @@ import { Location } from '@angular/common';
 import { Client } from '../../models/Client';
 import { ClientService } from '../../services/client.service';
 import { Address } from '../../models/address';
-import { Department } from '../../../shared/model/department';
-import { LocationService } from '../../../shared/services/location.service';
-import { City } from '../../../shared/model/city';
+import { Department } from '../../../../shared/model/department';
+import { LocationService } from '../../../../shared/services/location.service';
+import { City } from '../../../../shared/model/city';
 
 
 @Component({

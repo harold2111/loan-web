@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { MessageService } from '../../shared/services/message.service';
+import { MessageService } from '../../../shared/services/message.service';
 import { Loan } from '../models/loan';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';

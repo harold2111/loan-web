@@ -3,8 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Client } from '../models/Client';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { MessageService } from '../../shared/services/message.service';
-import { Address } from '../models/address';
+import { MessageService } from '../../../shared/services/message.service';
 
 const httpOptions = {
   headers: new HttpHeaders({

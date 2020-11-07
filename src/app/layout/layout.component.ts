@@ -8,9 +8,15 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
+  sideNavOpen = true;
+
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+  }
+
+  sideNavToggler(): void {
+    this.sideNavOpen = !this.sideNavOpen;
   }
 
 }

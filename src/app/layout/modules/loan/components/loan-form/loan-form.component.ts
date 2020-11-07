@@ -5,8 +5,8 @@ import { LoanService } from '../../services/loan.service';
 import { Loan } from '../../models/loan';
 import { Amortization } from '../../models/amortization';
 import { LoanWithAmortizations } from '../../models/loan_with_amortizations';
-import { Client } from 'src/app/layout/client/models/Client';
-import { ClientService } from 'src/app/layout/client/services/client.service';
+import { Client } from 'src/app/layout/modules/client/models/Client';
+import { ClientService } from 'src/app/layout/modules/client/services/client.service';
 
 @Component({
   selector: 'app-loan-form',
