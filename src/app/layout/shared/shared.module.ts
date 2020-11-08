@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { MessagesComponent } from './components/messages/messages.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     MessagesComponent
@@ -11,13 +12,13 @@ import { MessagesComponent } from './components/messages/messages.component';
     CommonModule,
     FormsModule,
     MaterialModule,
-    CommonModule
+    FlexLayoutModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     MaterialModule,
-    CommonModule
+    FlexLayoutModule
   ],
 })
 export class SharedModule { }

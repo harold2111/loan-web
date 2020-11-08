@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
 
-import {merge, of as observableOf} from 'rxjs';
-import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { ClientService } from '../../services/client.service';
 import { Router } from '@angular/router';
 import { Client } from '../../models/Client';
@@ -40,7 +38,7 @@ export class ClientListComponent implements OnInit {
           this.dataSource.sort = this.sort;
           this.isLoadingResults = false;
         },
-        error => {
+        () => {
           this.isLoadingResults = false;
         }
       );

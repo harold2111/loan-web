@@ -1,30 +1,27 @@
-<mat-card class="wrapper-mat-card" fxLayout="column">
+<mat-card fxLayout="column">
 
-  <div class="wrapper-mat-card-header" fxLayout="row" fxLayoutAlign="space-between center">
-    <mat-card-title class="mat-card-title">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-card-title>
       Clientes
     </mat-card-title>
     <div>
-      <button (click)="onCreate()" mat-raised-button color="accent">
+      <button (click)="onCreate()" mat-raised-button color="primary">
         <mat-icon>add</mat-icon>
-        <span>Nuevo Cliente</span>
+        <span>Nuevo</span>
       </button>
     </div>
   </div>
 
   <mat-card-content fxLayout="column">
-    <mat-toolbar-row>
-      <mat-form-field class="search-row" floatPlaceholder="never" fxFlex="70">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-      <span class="fill-spacer"></span>
-    </mat-toolbar-row>
+    <mat-form-field floatPlaceholder="never" fxFlex>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
 
     <div class="example-loading-shade" *ngIf="isLoadingResults">
       <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     </div>
 
-    <mat-table #table [dataSource]="dataSource" class="wrapper-mat-table" matSort matSortActive="created" matSortDisableClear
+    <mat-table #table [dataSource]="dataSource" matSort matSortActive="created" matSortDisableClear
       matSortDirection="asc">
       <!-- identification Column -->
       <ng-container matColumnDef="identification">
@@ -37,7 +34,6 @@
           </a>
         </mat-cell>
       </ng-container>
-
       <!-- firstName Column -->
       <ng-container matColumnDef="firstName">
         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
@@ -45,7 +41,6 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let row">{{ row.firstName }}</mat-cell>
       </ng-container>
-
       <!-- lastName Column -->
       <ng-container matColumnDef="lastName">
         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true">
@@ -53,13 +48,11 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let row">{{ row.lastName }}</mat-cell>
       </ng-container>
-
       <!-- telephone1 Column -->
       <ng-container matColumnDef="telephone1">
         <mat-header-cell *matHeaderCellDef>Telefono</mat-header-cell>
         <mat-cell *matCellDef="let row">{{ row.telephone1 }}</mat-cell>
       </ng-container>
-
       <!-- Options Column -->
       <ng-container matColumnDef="options">
         <mat-header-cell *matHeaderCellDef>Options</mat-header-cell>
