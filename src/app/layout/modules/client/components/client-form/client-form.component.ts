@@ -7,7 +7,7 @@ import { Address } from '../../models/address';
 import { Department } from '../../../../shared/model/department';
 import { LocationService } from '../../../../shared/services/location.service';
 import { City } from '../../../../shared/model/city';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 export class ClientFormComponent implements OnInit {
 
   clientForm = this.fb.group({
-    id: [''],
+    id: [0],
     identification: ['', Validators.required],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -28,12 +28,12 @@ export class ClientFormComponent implements OnInit {
     addresses: this.fb.array([])
   });
 
-  isEditMode = false;
-  selecteClientdId: number;
-  clientModel: Client = new Client();
-  addressesModel: Address[] = [];
   departments: Department[];
-  citiesByDepartmentSelected: City[][] = [];
+  cities: City[][] = [];
+
+  isEditMode = false;
+  selectedClientId: number;
+  clientModel: Client = new Client();
 
   constructor(
     private route: ActivatedRoute,
@@ -45,36 +45,62 @@ export class ClientFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.addAddress();
-    // this.getSelectedIDParameter();
+    this.getSelectedIDParameter();
     this.loadDepartments();
-    /*if (this.isEditMode) {
-      this.clientService.getClientById(this.selecteClientdId).subscribe((client) => {
-        this.clientModel = client;
-        this.addressesModel = client.addresses;
-        for (let index = 0; index < this.addressesModel.length; index++) {
-          this.addressesModel.forEach(element => {
-            this.loadCitiesBySelectedDepartment(index);
-          });
-        }
+    if (this.isEditMode) {
+      this.clientService.getClientById(this.selectedClientId).subscribe((client) => {
+        this.fillFormFromClient(client);
       });
     } else {
-      this.addressesModel.push(new Address());
-    }*/
+      this.addAddress();
+    }
+  }
+
+  private fillFormFromClient(client: Client): void {
+    this.clientModel = client;
+    this.id.setValue(client.id);
+    this.identification.setValue(client.identification);
+    this.firstName.setValue(client.firstName);
+    this.lastName.setValue(client.lastName);
+    this.telephone1.setValue(client.telephone1);
+    this.telephone2.setValue(client.telephone2);
+    this.email.setValue(client.email);
+    const clientAddresses = client.addresses;
+    for (let index = 0; index < clientAddresses.length; index++) {
+      const address = clientAddresses[index];
+      this.addAddress();
+      this.addresses.controls[index].get('id').setValue(address.id);
+      this.addresses.controls[index].get('streetAddress').setValue(address.streetAddress);
+      this.addresses.controls[index].get('departmentID').setValue(address.departmentID);
+      this.addresses.controls[index].get('cityID').setValue(address.cityID);
+      this.locationService.getCitiesByDepartmentID(address.departmentID).subscribe(cities => {
+        this.cities[index] = cities;
+      });
+    }
+  }
+
+  getSelectedIDParameter(): void {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = params.get('id');
+      if (id != null) {
+        this.isEditMode = true;
+        this.selectedClientId = +id;
+      }
+    });
   }
 
   addAddress(): void {
     const fg = this.fb.group({
-      // id: [''],
+      id: [0],
       streetAddress: ['', Validators.required],
-      departmentID: ['', Validators.required],
-      cityID: ['', Validators.required]
+      departmentID: [0, Validators.required],
+      cityID: [0, Validators.required]
     });
     this.addresses.push(fg);
   }
 
-  get addresses(): FormArray{
-    return this.clientForm.get('addresses') as FormArray;
+  removeAddress(index: number): void {
+    this.addresses.removeAt(index);
   }
 
   loadDepartments(): void {
@@ -83,71 +109,83 @@ export class ClientFormComponent implements OnInit {
     });
   }
 
-  getSelectedIDParameter(): void {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      const id = params.get('id');
-      if (id != null) {
-        this.isEditMode = true;
-        this.selecteClientdId = +id;
-      }
-    });
-  }
-
-  loadCitiesBySelectedDepartment(index: number): void {
-    const departmentID = this.addressesModel[index].departmentID;
-    this.locationService.getCitiesByDepartmentID(departmentID).subscribe(cities => {
-      this.citiesByDepartmentSelected[index] = cities;
-    });
-  }
-
   changeDepartment(index: number): void {
-    if (this.addresses.controls[index] !== null){
-
+    let departmentId: number;
+    if (this.addresses.controls.length > index) {
+      departmentId = this.addresses.controls[index].get('departmentID').value;
     }
-    // typeof arrayName[index] === 'undefined'
-    this.addressesModel[index].cityID = 0;
-    this.loadCitiesBySelectedDepartment(index);
+    console.log(`Selected DepartmentId: ${departmentId}`);
+    this.locationService.getCitiesByDepartmentID(departmentId).subscribe(cities => {
+      this.cities[index] = cities;
+    });
   }
 
-  onAddAddress(): void {
-    this.addressesModel.push(new Address());
-  }
-
-  onRemoveddress(index: number): void {
-    this.addressesModel.splice(index, 1);
-  }
-
-  onCancel(): void {
-    this.location.back();
-  }
-
-  onSave(): void {
+  submit(): void {
+    console.log(`clientForm: ${JSON.stringify(this.clientForm.value)}`);
+    Object.assign(this.clientModel, this.clientForm.value);
+    console.log(`clientModel: ${JSON.stringify(this.clientModel)}`);
     if (this.isEditMode) {
-      this.clientService.editClient(this.selecteClientdId, this.clientModel).subscribe(client => {
+      this.clientService.editClient(this.clientModel.id, this.clientModel).subscribe(client => {
         this.location.back();
       });
     } else {
-      this.clientModel.addresses = this.addressesModel;
       this.clientService.createClient(this.clientModel).subscribe(client => {
         this.location.back();
       });
     }
   }
 
+  cancel(): void {
+    this.location.back();
+  }
+
+  // ERROR HANDLING
   isValidField(field: string): boolean {
-    return (this.clientForm.get(field).touched || this.clientForm.get(field).dirty)
-    && !this.clientForm.get(field).valid;
+    return !this.clientForm.get(field).valid;
   }
 
   getErrorMessage(field: string): string {
     const fieldControl = this.clientForm.get(field);
     if (fieldControl.errors.required) {
       return 'Un valor es requerido';
-    }else if (fieldControl.hasError('email')){
+    } else if (fieldControl.hasError('email')) {
       return 'Email no es valido';
-    }else {
+    } else {
       return 'Valor no es valido';
     }
+  }
+
+  // GETTERS
+  get id(): FormControl {
+    return this.clientForm.get('id') as FormControl;
+  }
+
+  get identification(): FormControl {
+    return this.clientForm.get('identification') as FormControl;
+  }
+
+  get firstName(): FormControl {
+    return this.clientForm.get('firstName') as FormControl;
+  }
+
+  get lastName(): FormControl {
+    return this.clientForm.get('lastName') as FormControl;
+  }
+
+  get telephone1(): FormControl {
+    return this.clientForm.get('telephone1') as FormControl;
+  }
+
+  get telephone2(): FormControl {
+    return this.clientForm.get('telephone2') as FormControl;
+  }
+
+  get email(): FormControl {
+    return this.clientForm.get('email') as FormControl;
+  }
+
+  get addresses(): FormArray {
+    return this.clientForm.get('addresses') as FormArray;
   }
 
 }

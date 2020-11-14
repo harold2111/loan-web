@@ -10,7 +10,7 @@
       <div fxLayout="row">
         <mat-form-field *ngIf="isEditMode">
           <mat-label>ID</mat-label>
-          <input matInput disabled value="{{selecteClientdId}}">
+          <input matInput disabled value="{{selectedClientId}}">
         </mat-form-field>
       </div>
       <div fxLayout="row wrap" fxLayoutGap="20px">
@@ -44,29 +44,7 @@
           <input matInput formControlName="email">
           <mat-error *ngIf="isValidField('email')">{{getErrorMessage("email")}}</mat-error>
         </mat-form-field>
-        <!--ng-container *ngFor="let addressModel of addressesModel; let i = index">
-          <mat-form-field appearance="standard">
-            <mat-label>Direccion</mat-label>
-            <input matInput formControlName="streetAddress">
-          </mat-form-field>
-          <mat-form-field appearance="standard">
-            <mat-label>Departamento</mat-label>
-            <mat-select [(ngModel)]="addressesModel[i].departmentID"
-              (ngModelChange)="fillCitiesBySelectedDepartment(i)">
-              <mat-option *ngFor="let d of departments" [value]="d.id">{{d.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field appearance="standard">
-            <mat-label>Ciudad</mat-label>
-            <mat-select [(ngModel)]="addressesModel[i].cityID" [disabled]="!addressesModel[i].departmentID">
-              <mat-option *ngFor="let c of citiesByDeparmentSelected[i]" [value]="c.id">{{c.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div *ngIf="i > 0">
-            <button (click)="onRemoveddress(i)" mat-raised-button color="accent">Remover</button>
-          </div>
-        </ng-container-->
-      </div>
+      </div>      
       <!--Addresses-->
       <div fxLayout="row">
         <h3>Direcciones</h3>
@@ -74,8 +52,8 @@
       <div fxLayout="row">
         <button (click)="addAddress()" mat-raised-button>Agregar dirección</button>
       </div>
-      <div fxLayout="row wrap" fxLayoutGap="20px" 
-           formArrayName="addresses" *ngFor="let address of addresses.controls; let i = index">
+      <div fxLayout="row wrap" fxLayoutGap="20px" formArrayName="addresses"
+        *ngFor="let address of addresses.controls; let i = index">
         <ng-container [formGroupName]="i">
           <mat-form-field appearance="standard">
             <mat-label>Dirección</mat-label>
@@ -90,20 +68,23 @@
           <mat-form-field appearance="standard">
             <mat-label>Ciudad</mat-label>
             <mat-select formControlName="cityID">
-              <mat-option *ngFor="let c of citiesByDepartmentSelected[i]" [value]="c.id">{{c.name}}</mat-option>
+              <mat-option *ngFor="let c of cities[i]" [value]="c.id">{{c.name}}</mat-option>
             </mat-select>
           </mat-form-field>
+          <div *ngIf="i > 0">
+            <button (click)="removeAddress(i)" mat-raised-button color="accent">Remover</button>
+          </div>
         </ng-container>
       </div>
+      <!--Addresses-END -->
+      <mat-card-actions fxLayout="row-reverse">
+        <button (click)="submit()" 
+                [disabled]="!clientForm.valid"
+                mat-raised-button color="primary">Guardar</button>
+        <button (click)="cancel()" 
+                mat-raised-button>Cancelar</button>
+      </mat-card-actions>
     </div>
   </form>
-
-  <mat-divider></mat-divider>
-
-  <mat-card-actions fxLayout="row-reverse">
-    <button (click)="onSave()" mat-raised-button color="primary">Guardar</button>
-    <button (click)="onCancel()" mat-raised-button>Cancelar</button>
-  </mat-card-actions>
-
 
 </mat-card>
