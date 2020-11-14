@@ -44,7 +44,8 @@ export class ClientListComponent implements OnInit {
       );
   }
 
-  applyFilter(filterValue: string): void {
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();

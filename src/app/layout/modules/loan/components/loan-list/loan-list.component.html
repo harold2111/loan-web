@@ -16,7 +16,7 @@
       <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     </div>
     <mat-form-field floatPlaceholder="never" fxFlex>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar">
     </mat-form-field>
 
     <table mat-table [dataSource]="data" class="wrapper-mat-table" matSort matSortActive="created" matSortDisableClear

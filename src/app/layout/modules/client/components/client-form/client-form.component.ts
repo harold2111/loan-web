@@ -104,7 +104,7 @@ export class ClientFormComponent implements OnInit {
     if (this.addresses.controls[index] !== null){
 
     }
-    typeof arrayName[index] === 'undefined'
+    // typeof arrayName[index] === 'undefined'
     this.addressesModel[index].cityID = 0;
     this.loadCitiesBySelectedDepartment(index);
   }

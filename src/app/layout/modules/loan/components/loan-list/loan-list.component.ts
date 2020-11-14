@@ -64,7 +64,7 @@ export class LoanListComponent implements AfterViewInit {
     this.router.navigate(['/loan/loan/loan-form', id]);
   }
 
-  applyFilter(filterValue: string): void {
+  applyFilter(event: Event): void {
     // TODO: implement
   }
 

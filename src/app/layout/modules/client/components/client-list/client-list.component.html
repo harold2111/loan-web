@@ -14,7 +14,7 @@
 
   <mat-card-content fxLayout="column">
     <mat-form-field floatPlaceholder="never" fxFlex>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar">
     </mat-form-field>
 
     <div class="example-loading-shade" *ngIf="isLoadingResults">
