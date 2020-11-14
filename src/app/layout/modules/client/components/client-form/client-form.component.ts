@@ -7,6 +7,7 @@ import { Address } from '../../models/address';
 import { Department } from '../../../../shared/model/department';
 import { LocationService } from '../../../../shared/services/location.service';
 import { City } from '../../../../shared/model/city';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -16,27 +17,38 @@ import { City } from '../../../../shared/model/city';
 })
 export class ClientFormComponent implements OnInit {
 
-  isEditMode = false;
+  clientForm = this.fb.group({
+    id: [''],
+    identification: ['', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    telephone1: ['', [Validators.required]],
+    telephone2: [''],
+    email: ['', [Validators.required, Validators.email]],
+    addresses: this.fb.array([])
+  });
 
+  isEditMode = false;
   selecteClientdId: number;
   clientModel: Client = new Client();
   addressesModel: Address[] = [];
-
   departments: Department[];
-  citiesByDeparmentSelected: City[][] = [];
+  citiesByDepartmentSelected: City[][] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
     private clientService: ClientService,
-    private locationService: LocationService) {
+    private locationService: LocationService,
+    private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.getSelectedIDParameter();
+    // this.addAddress();
+    // this.getSelectedIDParameter();
     this.loadDepartments();
-    if (this.isEditMode) {
+    /*if (this.isEditMode) {
       this.clientService.getClientById(this.selecteClientdId).subscribe((client) => {
         this.clientModel = client;
         this.addressesModel = client.addresses;
@@ -48,7 +60,21 @@ export class ClientFormComponent implements OnInit {
       });
     } else {
       this.addressesModel.push(new Address());
-    }
+    }*/
+  }
+
+  addAddress(): void {
+    const fg = this.fb.group({
+      // id: [''],
+      streetAddress: ['', Validators.required],
+      departmentID: ['', Validators.required],
+      cityID: ['', Validators.required]
+    });
+    this.addresses.push(fg);
+  }
+
+  get addresses(): FormArray{
+    return this.clientForm.get('addresses') as FormArray;
   }
 
   loadDepartments(): void {
@@ -70,11 +96,15 @@ export class ClientFormComponent implements OnInit {
   loadCitiesBySelectedDepartment(index: number): void {
     const departmentID = this.addressesModel[index].departmentID;
     this.locationService.getCitiesByDepartmentID(departmentID).subscribe(cities => {
-      this.citiesByDeparmentSelected[index] = cities;
+      this.citiesByDepartmentSelected[index] = cities;
     });
   }
 
-  fillCitiesBySelectedDepartment(index: number): void {
+  changeDepartment(index: number): void {
+    if (this.addresses.controls[index] !== null){
+
+    }
+    typeof arrayName[index] === 'undefined'
     this.addressesModel[index].cityID = 0;
     this.loadCitiesBySelectedDepartment(index);
   }
@@ -101,6 +131,22 @@ export class ClientFormComponent implements OnInit {
       this.clientService.createClient(this.clientModel).subscribe(client => {
         this.location.back();
       });
+    }
+  }
+
+  isValidField(field: string): boolean {
+    return (this.clientForm.get(field).touched || this.clientForm.get(field).dirty)
+    && !this.clientForm.get(field).valid;
+  }
+
+  getErrorMessage(field: string): string {
+    const fieldControl = this.clientForm.get(field);
+    if (fieldControl.errors.required) {
+      return 'Un valor es requerido';
+    }else if (fieldControl.hasError('email')){
+      return 'Email no es valido';
+    }else {
+      return 'Valor no es valido';
     }
   }
 

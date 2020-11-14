@@ -3,64 +3,100 @@
   <mat-card-title fxLayout="row" fxLayoutAlign="space-between center">
     <span *ngIf="!isEditMode">Crear Cliente</span>
     <span *ngIf="isEditMode">Editar Cliente</span>
-    <!--button (click)="onAddAddress()" mat-raised-button>Agregar dirección</button-->
   </mat-card-title>
 
-  <div fxLayout="column">
-    <div fxLayout="row">
-      <mat-form-field *ngIf="isEditMode">
-        <mat-label>ID</mat-label>
-        <input matInput disabled value="{{selecteClientdId}}">
-      </mat-form-field>
+  <form [formGroup]="clientForm">
+    <div fxLayout="column">
+      <div fxLayout="row">
+        <mat-form-field *ngIf="isEditMode">
+          <mat-label>ID</mat-label>
+          <input matInput disabled value="{{selecteClientdId}}">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="20px">
+        <mat-form-field appearance="standard">
+          <mat-label>Identificación</mat-label>
+          <input matInput formControlName="identification">
+          <mat-error *ngIf="isValidField('identification')">{{getErrorMessage("identification")}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Nombres</mat-label>
+          <input matInput formControlName="firstName">
+          <mat-error *ngIf="isValidField('firstName')">{{getErrorMessage("firstName")}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Apellidos</mat-label>
+          <input matInput formControlName="lastName">
+          <mat-error *ngIf="isValidField('lastName')">{{getErrorMessage("lastName")}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Telefono 1</mat-label>
+          <input matInput formControlName="telephone1">
+          <mat-error *ngIf="isValidField('telephone1')">{{getErrorMessage("telephone1")}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Telefono 2</mat-label>
+          <input matInput formControlName="telephone2">
+          <mat-error *ngIf="isValidField('telephone2')">{{getErrorMessage("telephone2")}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+          <mat-error *ngIf="isValidField('email')">{{getErrorMessage("email")}}</mat-error>
+        </mat-form-field>
+        <!--ng-container *ngFor="let addressModel of addressesModel; let i = index">
+          <mat-form-field appearance="standard">
+            <mat-label>Direccion</mat-label>
+            <input matInput formControlName="streetAddress">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Departamento</mat-label>
+            <mat-select [(ngModel)]="addressesModel[i].departmentID"
+              (ngModelChange)="fillCitiesBySelectedDepartment(i)">
+              <mat-option *ngFor="let d of departments" [value]="d.id">{{d.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Ciudad</mat-label>
+            <mat-select [(ngModel)]="addressesModel[i].cityID" [disabled]="!addressesModel[i].departmentID">
+              <mat-option *ngFor="let c of citiesByDeparmentSelected[i]" [value]="c.id">{{c.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="i > 0">
+            <button (click)="onRemoveddress(i)" mat-raised-button color="accent">Remover</button>
+          </div>
+        </ng-container-->
+      </div>
+      <!--Addresses-->
+      <div fxLayout="row">
+        <h3>Direcciones</h3>
+      </div>
+      <div fxLayout="row">
+        <button (click)="addAddress()" mat-raised-button>Agregar dirección</button>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="20px" 
+           formArrayName="addresses" *ngFor="let address of addresses.controls; let i = index">
+        <ng-container [formGroupName]="i">
+          <mat-form-field appearance="standard">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="streetAddress">
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Departamento</mat-label>
+            <mat-select formControlName="departmentID" (ngModelChange)="changeDepartment(i)">
+              <mat-option *ngFor="let d of departments" [value]="d.id">{{d.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="standard">
+            <mat-label>Ciudad</mat-label>
+            <mat-select formControlName="cityID">
+              <mat-option *ngFor="let c of citiesByDepartmentSelected[i]" [value]="c.id">{{c.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+      </div>
     </div>
-    <div fxLayout="row wrap" fxLayoutGap="20px">
-      <mat-form-field appearance="standard">
-        <mat-label>Identificación</mat-label>
-        <input matInput [(ngModel)]="clientModel.identification">
-      </mat-form-field>
-      <mat-form-field appearance="standard">
-        <mat-label>Nombres</mat-label>
-        <input matInput [(ngModel)]="clientModel.firstName">
-      </mat-form-field>
-      <mat-form-field appearance="standard">
-        <mat-label>Apellidos</mat-label>
-        <input matInput [(ngModel)]="clientModel.lastName">
-      </mat-form-field>
-      <mat-form-field appearance="standard">
-        <mat-label>Telefono 1</mat-label>
-        <input matInput [(ngModel)]="clientModel.telephone1">
-      </mat-form-field>
-      <mat-form-field appearance="standard">
-        <mat-label>Telefono 2</mat-label>
-        <input matInput [(ngModel)]="clientModel.telephone2">
-      </mat-form-field>
-      <mat-form-field appearance="standard">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="clientModel.email">
-      </mat-form-field>
-      <ng-container *ngFor="let addressModel of addressesModel; let i = index">
-        <mat-form-field appearance="standard">
-          <mat-label>Direccion</mat-label>
-          <input matInput [(ngModel)]="addressesModel[i].streetAddress">
-        </mat-form-field>
-        <mat-form-field appearance="standard">
-          <mat-label>Departamento</mat-label>
-          <mat-select [(ngModel)]="addressesModel[i].departmentID" (ngModelChange)="fillCitiesBySelectedDepartment(i)">
-            <mat-option *ngFor="let d of departments" [value]="d.id">{{d.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="standard">
-          <mat-label>Ciudad</mat-label>
-          <mat-select [(ngModel)]="addressesModel[i].cityID" [disabled]="!addressesModel[i].departmentID">
-            <mat-option *ngFor="let c of citiesByDeparmentSelected[i]" [value]="c.id">{{c.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div *ngIf="i > 0">
-          <button (click)="onRemoveddress(i)" mat-raised-button color="accent">Remover</button>
-        </div>
-      </ng-container>
-    </div>
-  </div>
+  </form>
 
   <mat-divider></mat-divider>
 
