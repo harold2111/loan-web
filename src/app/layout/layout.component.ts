@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-layout',
@@ -8,15 +11,15 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  sideNavOpen = true;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
 
-  constructor() { }
+  constructor(private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
-  }
-
-  sideNavToggler(): void {
-    this.sideNavOpen = !this.sideNavOpen;
   }
 
 }

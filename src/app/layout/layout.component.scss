@@ -1,13 +1,39 @@
-
-.main-container {
+.sidenav-container {
   height: 100vh;
-
-  .sidenav-container {
-    width: 350px;
-  }
-
-  .content-container {
-    padding: 20px;
-  }
-
 }
+
+.sidenav {  
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.content-container {
+  padding: 20px;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/*.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;  
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}*/

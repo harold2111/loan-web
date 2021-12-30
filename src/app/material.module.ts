@@ -39,6 +39,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import {PlatformModule} from '@angular/cdk/platform';
 import {ObserversModule} from '@angular/cdk/observers';
 import {PortalModule} from '@angular/cdk/portal';
+import {LayoutModule} from '@angular/cdk/layout';
 
 @NgModule({
   exports: [
@@ -81,7 +82,8 @@ import {PortalModule} from '@angular/cdk/portal';
     ObserversModule,
     OverlayModule,
     PlatformModule,
-    PortalModule
+    PortalModule,
+    LayoutModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-GB'},

@@ -1,6 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
-
 //@import "assets/scss/simple-theme.scss";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto Condensed, sans-serif; }
+// Imports functions, variables, and mixins that are needed by other Bootstrap files
+@import "./assets/scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/grid";
+//@import "~bootstrap/scss/utilities";
+@import "./assets/scss/reset";
